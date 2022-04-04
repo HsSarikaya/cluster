@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: nexus
+  labels:
+    app: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      containers:
+        - name: nexus
+          image: sonatype/nexus3:latest
+          env:
+          - name: MAX_HEAP
+            value: "1000m"
+          - name: MIN_HEAP
+            value: "500m"
+          resources:
+            limits:
+              memory: "6Gi"
+              cpu: "1000m"
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: nexus-pv
+              mountPath: /sonatype/nexus3
+      volumes:
+        - name: nexus-pv
+          persistentVolumeClaim:
+            claimName: nexus-pv-claim

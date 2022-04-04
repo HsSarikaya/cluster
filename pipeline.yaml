@@ -1,0 +1,69 @@
+pipeline {
+    agent any 
+     
+    
+    tools {
+        maven 'maven'
+    }
+    
+    stages {
+        stage('git clone') {
+            steps{
+                git credentialsId: 'GIT_HUB_CREDENTIALS', url: 'https://github.com/HsSarikaya/simple_java_app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        
+        stage('Docker-Build') {
+            steps{
+                script { 
+                    sh "docker build -t my_image . --no-cache --build-arg BUILD_ID=my_build"
+                }
+            }
+        }
+    
+        stage('Docker-tag') {
+            steps{
+                script { 
+                    sh "docker tag my_image ayakiras/simple_java_app:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Docker-push') {
+            steps{
+                script { 
+                    sh "docker login -u ayakiras -p***** && docker push ayakiras/simple_java_app:${BUILD_NUMBER}"
+                }
+            }
+        }
+        stage('Change image tag') {
+            steps{
+                script { 
+                    sh "sed -i s/IMAGE_TAG/${BUILD_NUMBER}/g k8s/java/values.yaml"
+                }
+            }
+        }
+        stage('Deploy') {
+            steps{
+                script { 
+                    sh "helm upgrade java java"
+                }
+            }
+        }
+
+    }
+}
