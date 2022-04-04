@@ -26,4 +26,4 @@ Jenkins kısmında github için "ssh-keygen -f simple-java-app-jenkins-github-de
 jenkins ekledik.(jenkins Credentials kısmında)
 Repomuzu tanıttıktan sonra github webhook için ayarlamalar yapıldı.(Payload URL kısmında public.ip:32000 )
 
-Sonrasında jenkins Global Tool Configuration ayarlamalar yapıldı. (öncesinde ilgili plug-in ler eklendi)
+Sonrasında jenkins Global Tool Configuration ayarlamalar yapıldı. (öncesinde ilgili plug-in'ler yüklendi)
