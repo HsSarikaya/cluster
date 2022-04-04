@@ -16,10 +16,10 @@ Jenkins ile nexus kurulumu için jenkins-manifest ve nexus-manifest dosyaları �
 Service yamllara göre ilgili portları düzenlemeyi unutmayalım(security-groups)
 
 jenkins e girmek için giriş passwordunu aşağıdaki komut ile alabilirsiniz.
-kubectl exec  "your_pod" cat  /var/jenkins_home/secrets/initialAdminPassword -n devops-tools
+ - kubectl exec  "your_pod" cat  /var/jenkins_home/secrets/initialAdminPassword -n devops-tools
 
 nexus a girmek için giriş passwordunu aşağıdaki komut ile alabilirsiniz.
-kubectl exec "your_pod" -n nexus cat /nexus-data/admin.password
+ - kubectl exec "your_pod" -n nexus cat /nexus-data/admin.password
 
 -----
 Jenkins kısmında github için "ssh-keygen -f simple-java-app-jenkins-github-deploy-key -m PEM" ile keylerimizi oluşturup public olanı github private olanı 
