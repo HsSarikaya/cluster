@@ -1,10 +1,16 @@
+Cluster için
+----
+
 clusterı oluşturmak için içerikte yer alan cfn-create-k8s-cluster template kullanarak 1master-2workerdan oluşan cluster ı kurabilirsiniz.
+
+-----
 
 Master-node bağlandıktan sonra
 -namespacelerimizi oluşturalım
-  kubectl create namespace devops-tools
-  kubectl create namespace nexus
+ - kubectl create namespace devops-tools
+ - kubectl create namespace nexus
 
+-----
 Jenkins ile nexus kurulumu için jenkins-manifest ve nexus-manifest dosyaları çalıştırabilirsiniz 
 
 Service yamllara göre ilgili portları düzenlemeyi unutmayalım(security-groups)
